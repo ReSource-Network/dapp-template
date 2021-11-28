@@ -13,8 +13,8 @@ export const Header = () => {
   const context = useWeb3Context()
 
   return (
-    <Flex {...containerStyles}>
-      <HStack justifyContent="flex-end" align="center" spacing={6}>
+    <Flex justifyContent="flex-end" {...containerStyles}>
+      <HStack align="center" spacing={6}>
         {context.library && (
           <>
             <AddressInfo />
