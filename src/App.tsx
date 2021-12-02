@@ -5,7 +5,6 @@ import { RecoilRoot } from "recoil"
 import { useWeb3Context } from "web3-react"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
-import ConnectWalletModal from "./components/wallet/ConnectWalletModal"
 import Routes from "./routes"
 
 import Web3Provider from "./services/web3/Web3Provider"
@@ -37,7 +36,6 @@ const AppLayout = () => {
       <Header />
       <Routes />
       {/* <Footer /> */}
-      <ConnectWalletModal isOpen={!canAccess} onClose={connectModal.onClose} />
     </>
   )
 }

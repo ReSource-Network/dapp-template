@@ -1,16 +1,21 @@
-import { Center, Flex, HStack, StackProps } from "@chakra-ui/layout"
-import { faChartPie, faStore } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React from "react"
-import { useHistory, useLocation } from "react-router-dom"
+import { Flex, HStack, StackProps } from "@chakra-ui/layout"
 import { useWeb3Context } from "web3-react"
 import Button from "./Button"
 import AddressInfo from "./wallet/AddressInfo"
+import useConnectWallet from "./wallet/useConnectWallet"
+import { Image } from "@chakra-ui/react"
+import { gradients } from "../theme/foundations/colors"
+import { useEffectOnce } from "react-use"
+
+const metaMaskIcon = "https://cdn.iconscout.com/icon/free/png-256/metamask-2728406-2261817.png"
 
 export const Header = () => {
-  const history = useHistory()
-  const location = useLocation()
   const context = useWeb3Context()
+  const connectWallet = useConnectWallet()
+
+  useEffectOnce(() => {
+    if (!context.active) connectWallet()
+  })
 
   return (
     <Flex justifyContent="flex-end" {...containerStyles}>
@@ -19,6 +24,17 @@ export const Header = () => {
           <>
             <AddressInfo />
           </>
+        )}
+        {!context.library && (
+          <Button
+            size="md"
+            onClick={async () => await connectWallet()}
+            background={gradients.primary}
+            justifyContent="space-between"
+            rightIcon={<Image width="2em" src={metaMaskIcon} />}
+          >
+            Connect Wallet
+          </Button>
         )}
       </HStack>
     </Flex>
